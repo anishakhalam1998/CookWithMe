@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4 fw-bold text-primary">All Recipes</h1>
+        <a href="{% url 'recipe_create' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus"></i> Create Recipe
+        </a>
+    </div>
+
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">
+                        <a href="{% url 'recipe_detail' recipe.pk %}" class="text-decoration-none text-dark">
+                            {{ recipe.title }}
+                        </a>
+                    </h5>
+                    <p class="card-text text-muted">
+                        <small>by {{ recipe.user.username }}</small>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'recipe_detail' recipe.pk %}" class="btn btn-outline-primary btn-sm">
+                        View Recipe <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .card-title a {
+        transition: color 0.3s ease;
+    }
+    .card-title a:hover {
+        color: #4169e1 !important;
+    }
+    .btn-outline-primary {
+        border-color: #4169e1;
+        color: #4169e1;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-outline-primary:hover {
+        background-color: #4169e1;
+        color: #fff;
+    }
+</style>
+{% endblock %}

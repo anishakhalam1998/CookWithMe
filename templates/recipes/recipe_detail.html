@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="card-title mb-0">{{ recipe.title }}</h1>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted"><strong>Created by:</strong> {{ recipe.user.username }}</p>
+                    <p>{{ recipe.description }}</p>
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold">Ingredients</h5>
+                        <p class="text-muted">{{ recipe.ingredients }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold">Instructions</h5>
+                        <p class="text-muted">{{ recipe.instructions }}</p>
+                    </div>
+
+                    {% if recipe.image %}
+                        <div class="mb-4">
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="img-fluid rounded">
+                        </div>
+                    {% endif %}
+
+                    <!-- Show Edit and Delete buttons only if the logged-in user is the recipe creator -->
+                    {% if recipe.user == request.user %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'recipe_update' recipe.pk %}" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{% url 'recipe_delete' recipe.pk %}" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">You can only edit or delete your own recipes.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
+{% endblock %}
