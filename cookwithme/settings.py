@@ -25,7 +25,7 @@ SECRET_KEY = '!g9rk!^%-vmc+35yp&vuw%007^q_kkso%+qdjxndyiz6uqh4#6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cookwithme-env.eba-dp4izsup.eu-west-1.elasticbeanstalk.com']
 
 
 # Application definition
