@@ -25,7 +25,7 @@ SECRET_KEY = '!g9rk!^%-vmc+35yp&vuw%007^q_kkso%+qdjxndyiz6uqh4#6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['9729fe093651439ab11a5abfb03f845c.vfs.cloud9.eu-west-1.amazonaws.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -123,3 +123,4 @@ LOGIN_REDIRECT_URL = 'recipe_list'  # Redirect to the recipe list after login
 LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
 MEDIA_URL = '/media/'  # URL prefix for media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored
+
