@@ -11,7 +11,7 @@ phases:
   install:
     runtime-versions:
       python: 3.11
-      java: corretto11
+      java: corretto17  # Changed from corretto11 to corretto17
     commands:
       - yum update -y
       - yum install -y jq unzip
@@ -19,10 +19,11 @@ phases:
       - source venv/bin/activate
       - pip install --upgrade pip
       - pip install -r requirements.txt
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-      - unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-      - chmod +x sonar-scanner-4.8.0.2856-linux/bin/*
-      - export PATH=$PATH:$PWD/sonar-scanner-4.8.0.2856-linux/bin
+      # Download newer SonarScanner compatible with Java 17
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+      - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+      - chmod +x sonar-scanner-5.0.1.3006-linux/bin/*
+      - export PATH=$PATH:$PWD/sonar-scanner-5.0.1.3006-linux/bin
 
   pre_build:
     commands:
@@ -33,14 +34,13 @@ phases:
   build:
     commands:
       - echo "Starting SonarCloud analysis..."
-      - >
-        sonar-scanner
-        -Dsonar.projectKey=$Project
-        -Dsonar.organization=$Organization
-        -Dsonar.sources=.
-        -Dsonar.host.url=$HOST
-        -Dsonar.login=$LOGIN
-        -Dsonar.python.version=3.11
+      - sonar-scanner \
+          -Dsonar.projectKey=$Project \
+          -Dsonar.organization=$Organization \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=$HOST \
+          -Dsonar.login=$LOGIN \
+          -Dsonar.python.version=3.11
       - echo "Waiting for analysis to complete..."
       - sleep 10
       - echo "Checking Quality Gate status..."
