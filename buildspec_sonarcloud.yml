@@ -2,47 +2,63 @@ version: 0.2
 
 env:
   secrets-manager:
-    LOGIN: cookwithme:LOGIN
-    HOST: cookwithme:HOST
-    Organization: cookwithme:Organization
-    Project: cookwithme:Project
+    LOGIN: cookwithme/sonar:sonartoken
+    HOST: cookwithme/sonar:HOST
+    Organization: cookwithme/sonar:Organization
+    Project: cookwithme/sonar:Project
 
 phases:
   install:
     runtime-versions:
-      python: 3.11
+      python: 3.8  # Use appropriate version for your Django project
     commands:
+      # Install dependencies for Django and SonarCloud
+      - echo Installing pip, virtualenv, and dependencies...
+      - python -m venv venv
+      - source venv/bin/activate
       - pip install --upgrade pip
-      - pip install -r requirements.txt
-      # Install SonarScanner for Python
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - unzip sonar-scanner-cli-4.7.0.2747-linux.zip
-      - export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin
+      - pip install -r requirements.txt  # Assuming you have a requirements.txt with all dependencies
+      - apt-get update
+      - apt-get install -y jq
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+      - unzip ./sonar-scanner-cli-3.3.0.1492-linux.zip
+      - export PATH=$PATH:/sonar-scanner-3.3.0.1492-linux/bin/
 
   pre_build:
     commands:
-      - python --version
+      # Install any additional tools if needed
+      - echo Running pre-build commands...
 
   build:
     commands:
-      # Run Sonar Scanner
+      # Run Django tests using pytest and coverage
+      - echo Running tests...
+      - source venv/bin/activate
+      - pip install pytest pytest-django coverage
+      - pytest --maxfail=1 --disable-warnings -q
+
+      # Run SonarCloud analysis
+      - echo Running SonarCloud analysis...
       - sonar-scanner \
           -Dsonar.projectKey=$Project \
           -Dsonar.organization=$Organization \
           -Dsonar.sources=. \
           -Dsonar.host.url=$HOST \
-          -Dsonar.login=$LOGIN
+          -Dsonar.login=$LOGIN \
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+
+      # Optional: Ensure that the code passes the SonarCloud quality gate
       - sleep 5
-      - curl "$HOST/api/qualitygates/project_status?projectKey=$Project" > result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
-      - |
-        if [ "$(jq -r '.projectStatus.status' result.json)" = "ERROR" ]; then
-          echo "❌ Quality Gate failed"
-          exit 1
-        else
-          echo "✅ Quality Gate passed"
-        fi
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then exit 1 ; fi  # Fail the build if quality gate is not passed
+
+  post_build:
+    commands:
+      # Any post-build commands, such as cleanup
+      - echo Build complete.
 
 artifacts:
   files:
     - '**/*'
+  discard-paths: yes
