@@ -123,4 +123,3 @@ LOGIN_REDIRECT_URL = 'recipe_list'  # Redirect to the recipe list after login
 LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
 MEDIA_URL = '/media/'  # URL prefix for media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored
-
