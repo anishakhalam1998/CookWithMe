@@ -25,12 +25,10 @@ phases:
 
   build:
     commands:
-      # Debugging step: check the environment variables
       - echo "Project: $Project"
       - echo "Organization: $Organization"
       - echo "Host URL: $HOST"
       - echo "Login Token: $LOGIN"
-      # Run SonarScanner without the organization flag (if using SonarQube)
       - sonar-scanner \
           -Dsonar.projectKey=$Project \
           -Dsonar.sources=. \
