@@ -2,10 +2,10 @@ version: 0.2
 
 env:
   secrets-manager:
-    LOGIN: prod/sonar:199454202205f362d5f1a708d34d361232142d77
-    HOST: prod/sonar:https://sonarcloud.io
-    Organization: prod/sonar:anishakhalam1998
-    Project: prod/sonar:anishakhalam1998_cookwithme
+    LOGIN: cookwithme:LOGIN
+    HOST: cookwithme:HOST
+    Organization: cookwithme:Organization
+    Project: cookwithme:Project
 
 phases:
   install:
@@ -13,9 +13,7 @@ phases:
       python: 3.11
     commands:
       - pip install --upgrade pip
-      - pip install -r requirements.txt pylint
-      - apt-get update
-      - apt-get install -y jq unzip wget
+      - pip install -r requirements.txt
       # Install SonarScanner for Python
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip sonar-scanner-cli-4.7.0.2747-linux.zip
@@ -24,7 +22,6 @@ phases:
   pre_build:
     commands:
       - python --version
-      - pylint $(find $CODEBUILD_SRC_DIR -name "*.py") --fail-under=6 || true
 
   build:
     commands:
