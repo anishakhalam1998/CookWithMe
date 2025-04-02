@@ -32,17 +32,8 @@ phases:
 
   build:
     commands:
-      - echo "Starting SonarCloud analysis..."
-      - sonar-scanner
-          -Dsonar.projectKey=$Project
-          -Dsonar.organization=$Organization
-          -Dsonar.sources=.
-          -Dsonar.host.url=$HOST
-          -Dsonar.login=$LOGIN
-          -Dsonar.python.version=3.11
-          -Dsonar.analysis.ci=true
-      - echo "Waiting for analysis to complete..."
-      - sleep 10
+      - echo "Waiting for SonarCloud automatic analysis to complete..."
+      - sleep 10  # Adjust based on expected time for analysis completion
       - echo "Checking Quality Gate status..."
       - curl -u "$LOGIN:" "$HOST/api/qualitygates/project_status?projectKey=$Project" > result.json
       - cat result.json
