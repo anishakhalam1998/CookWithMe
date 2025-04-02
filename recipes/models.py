@@ -1,4 +1,4 @@
-"""not used model.py"""
+"""not used model.py for ndnskjd """
 from django.db import models
 from django.contrib.auth.models import User
 class Recipe(models.Model):
