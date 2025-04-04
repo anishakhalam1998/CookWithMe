@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from .models import Recipe
-from .forms import RecipeForm
+from .models import Recipe  
+from .forms import RecipeForm,CustomUserCreationForm
 @login_required
 def recipe_list(request):
     """not used"""
@@ -62,13 +62,16 @@ def home(request):
     return render(request, 'home.html')
 
 def signup(request):
-    """not used"""
+    """Updated signup view with email and mobile"""
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Set mobile in the profile
+            user.userprofile.mobile = form.cleaned_data['mobile']
+            user.userprofile.save()
             login(request, user)
             return redirect('recipe_list')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
