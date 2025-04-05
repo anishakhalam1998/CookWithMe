@@ -14,17 +14,17 @@
             color: #333;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            min-height: 100vh;
             margin: 0;
         }
         .navbar {
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0; /* Add padding to the navbar */
+            padding: 1rem 0;
         }
         .navbar-brand {
             font-weight: 600;
-            color: #4169e1 !important;
+            color: #000 !important; /* Changed to black */
             font-size: 1.5rem;
         }
         .navbar-nav .nav-link {
@@ -34,28 +34,34 @@
             transition: color 0.3s ease;
         }
         .navbar-nav .nav-link:hover {
-            color: #4169e1 !important;
+            color: #000 !important; /* Changed to black */
+            font-weight: 600; /* Added weight on hover */
         }
         .content {
-            flex: 1; /* Ensure content takes up remaining space */
-            padding-top: 2rem; /* Add padding to separate content from the header */
+            flex: 1;
+            padding-top: 2rem;
         }
         .footer {
             background-color: #ffffff;
-            padding: 1rem 0;
-            margin-top: auto; /* Push footer to the bottom */
+            padding: 1.5rem 0; /* Increased padding */
+            margin-top: auto;
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
             font-size: 0.9rem;
             color: #666;
         }
         .footer a {
-            color: #4169e1;
+            color: #000; /* Changed to black */
             text-decoration: none;
             transition: color 0.3s ease;
+            font-weight: 500; /* Added weight */
         }
         .footer a:hover {
-            color: #e65a50;
+            color: #333; /* Dark gray on hover */
+            text-decoration: underline;
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -92,7 +98,11 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 CookWithMe. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p>&copy; 2025 CookWithMe. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a>
+            </p>
         </div>
     </footer>
 

@@ -1,51 +1,226 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
-    {% csrf_token %}
+<div class="signup-container">
+    <h2 class="signup-title">Create Your Account</h2>
     
-    <div class="form-group">
-        {{ form.username.label_tag }}
-        {{ form.username }}
-        {% if form.username.errors %}
-            <div class="error">{{ form.username.errors }}</div>
-        {% endif %}
-    </div>
+    <form method="post" class="signup-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error-message">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.mobile.id_for_label }}">Mobile Number</label>
+            {{ form.mobile }}
+            <div class="hint">Format: +1234567890 or 1234567890</div>
+            {% if form.mobile.errors %}
+                <div class="error-message">{{ form.mobile.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Password</label>
+            {{ form.password1 }}
+            <div class="password-hints">
+                <div class="hint-item" id="length-hint">✓ 8+ characters</div>
+                <div class="hint-item" id="number-hint">✓ Contains number</div>
+                <div class="hint-item" id="special-hint">✓ Special character</div>
+                <div class="hint-item" id="username-hint">✓ Not similar to username</div>
+            </div>
+            {% if form.password1.errors %}
+                <div class="error-message">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="error-message">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="submit-btn">Sign Up</button>
+        
+        <div class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .signup-container {
+        max-width: 500px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
     
-    <div class="form-group">
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        {% if form.email.errors %}
-            <div class="error">{{ form.email.errors }}</div>
-        {% endif %}
-    </div>
+    .signup-title {
+        text-align: center;
+        color: #000; /* Black */
+        margin-bottom: 1.5rem;
+    }
     
-    <div class="form-group">
-        {{ form.mobile.label_tag }}
-        {{ form.mobile }}
-        <small class="form-text text-muted">Format: +1234567890 or 1234567890</small>
-        {% if form.mobile.errors %}
-            <div class="error">{{ form.mobile.errors }}</div>
-        {% endif %}
-    </div>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
     
-    <div class="form-group">
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-        {% if form.password1.errors %}
-            <div class="error">{{ form.password1.errors }}</div>
-        {% endif %}
-    </div>
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #222; /* Very dark gray */
+    }
     
-    <div class="form-group">
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-        {% if form.password2.errors %}
-            <div class="error">{{ form.password2.errors }}</div>
-        {% endif %}
-    </div>
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+    }
     
-    <button type="submit" class="btn btn-primary">Sign Up</button>
-</form>
+    input:focus {
+        outline: none;
+        border-color: #000; /* Black */
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Subtle black shadow */
+    }
+    
+    .hint {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.25rem;
+    }
+    
+    .password-hints {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .hint-item {
+        font-size: 0.85rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+    }
+    
+    .hint-item:before {
+        content: "✗";
+        margin-right: 0.5rem;
+        color: #d00; /* Dark red for errors */
+    }
+    
+    .hint-item.valid:before {
+        content: "✓";
+        color: #000; /* Black for success */
+    }
+    
+    .error-message {
+        color: #d00; /* Dark red */
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #000; /* Black */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+        background-color: #333; /* Dark gray on hover */
+    }
+    
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+    }
+    
+    .login-link a {
+        color: #000; /* Black */
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const password1 = document.querySelector('#{{ form.password1.id_for_label }}');
+    const username = document.querySelector('#{{ form.username.id_for_label }}');
+    
+    const hints = {
+        length: document.querySelector('#length-hint'),
+        number: document.querySelector('#number-hint'),
+        special: document.querySelector('#special-hint'),
+        username: document.querySelector('#username-hint')
+    };
+
+    password1.addEventListener('input', function() {
+        const value = this.value;
+        const usernameValue = username.value;
+        
+        // Check length
+        if (value.length >= 8) {
+            hints.length.classList.add('valid');
+        } else {
+            hints.length.classList.remove('valid');
+        }
+        
+        // Check for number
+        if (/\d/.test(value)) {
+            hints.number.classList.add('valid');
+        } else {
+            hints.number.classList.remove('valid');
+        }
+        
+        // Check for special character
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            hints.special.classList.add('valid');
+        } else {
+            hints.special.classList.remove('valid');
+        }
+        
+        // Check similarity to username
+        if (usernameValue && value.toLowerCase().includes(usernameValue.toLowerCase())) {
+            hints.username.classList.remove('valid');
+        } else {
+            hints.username.classList.add('valid');
+        }
+    });
+});
+</script>
 {% endblock %}

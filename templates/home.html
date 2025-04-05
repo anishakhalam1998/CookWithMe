@@ -3,26 +3,24 @@
 {% block content %}
 <div class="hero-section text-center py-5 bg-light">
     <div class="container">
-        <h1 class="display-4 fw-bold text-primary mb-3">Welcome to CookWithMe!</h1>
+        <h1 class="display-4 fw-bold text-dark mb-3">Welcome to CookWithMe!</h1>
         <p class="lead text-muted mb-4">Share and explore delicious recipes from around the world.</p>
         <div class="mt-4">
             {% if user.is_authenticated %}
-                <a href="{% url 'recipe_list' %}" class="btn btn-primary btn-lg px-4 me-3">Explore Recipes</a>
-                <a href="{% url 'recipe_create' %}" class="btn btn-outline-primary btn-lg px-4">Add Your Recipe</a>
+                <a href="{% url 'recipe_list' %}" class="btn btn-dark btn-lg px-4 me-3">Explore Recipes</a>
+                <a href="{% url 'recipe_create' %}" class="btn btn-outline-dark btn-lg px-4">Add Your Recipe</a>
             {% else %}
-                <a href="{% url 'signup' %}" class="btn btn-primary btn-lg px-4 me-3">Get Started</a>
-                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-4">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-dark btn-lg px-4 me-3">Get Started</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg px-4">Login</a>
             {% endif %}
         </div>
     </div>
 </div>
 
-
-
 <style>
     .hero-section {
-        background: linear-gradient(135deg, rgba(255, 111, 97, 0.1), rgba(255, 111, 97, 0.05));
-        border-bottom: 1px solid rgba(255, 111, 97, 0.1);
+        background: #f8f9fa; /* Light gray background */
+        border-bottom: 1px solid #e0e0e0; /* Subtle border */
     }
     .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -31,13 +29,22 @@
         transform: translateY(-5px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-    .btn-outline-primary {
-        border-color: #4169e1;
-        color: #4169e1;
-        transition: background-color 0.3s ease, color 0.3s ease;
+    .btn-dark {
+        background-color: #000;
+        border-color: #000;
+        transition: background-color 0.3s ease;
     }
-    .btn-outline-primary:hover {
-        background-color: #4169e1;
+    .btn-dark:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+    .btn-outline-dark {
+        border-color: #000;
+        color: #000;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-dark:hover {
+        background-color: #000;
         color: #fff;
     }
 </style>

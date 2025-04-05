@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="display-4 fw-bold text-primary">All Recipes</h1>
-        <a href="{% url 'recipe_create' %}" class="btn btn-primary btn-lg">
+        <h1 class="display-4 fw-bold text-dark">All Recipes</h1>
+        <a href="{% url 'recipe_create' %}" class="btn btn-dark btn-lg">
             <i class="fas fa-plus"></i> Create Recipe
         </a>
     </div>
@@ -24,7 +24,7 @@
                     </p>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{% url 'recipe_detail' recipe.pk %}" class="btn btn-outline-primary btn-sm">
+                    <a href="{% url 'recipe_detail' recipe.pk %}" class="btn btn-outline-dark btn-sm">
                         View Recipe <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -38,6 +38,7 @@
     .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border-radius: 10px;
+        border: 1px solid #e0e0e0;
     }
     .card:hover {
         transform: translateY(-5px);
@@ -47,15 +48,25 @@
         transition: color 0.3s ease;
     }
     .card-title a:hover {
-        color: #4169e1 !important;
+        color: #000 !important;
+        text-decoration: underline;
     }
-    .btn-outline-primary {
-        border-color: #4169e1;
-        color: #4169e1;
-        transition: background-color 0.3s ease, color 0.3s ease;
+    .btn-dark {
+        background-color: #000;
+        border-color: #000;
+        transition: all 0.3s ease;
     }
-    .btn-outline-primary:hover {
-        background-color: #4169e1;
+    .btn-dark:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+    .btn-outline-dark {
+        border-color: #000;
+        color: #000;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-dark:hover {
+        background-color: #000;
         color: #fff;
     }
 </style>

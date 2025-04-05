@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm">
-                <div class="card-header bg-danger text-white">
+                <div class="card-header bg-dark text-white">
                     <h1 class="card-title mb-0">Delete Recipe</h1>
                 </div>
                 <div class="card-body">
@@ -15,10 +15,10 @@
                     <form method="post">
                         {% csrf_token %}
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <button type="submit" class="btn btn-danger me-md-2">
+                            <button type="submit" class="btn btn-dark me-md-2">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
-                            <a href="{% url 'recipe_list' %}" class="btn btn-secondary">
+                            <a href="{% url 'recipe_list' %}" class="btn btn-outline-dark">
                                 <i class="fas fa-times"></i> Cancel
                             </a>
                         </div>
@@ -32,27 +32,28 @@
 <style>
     .card {
         border-radius: 10px;
+        border: 1px solid #e0e0e0;
     }
     .card-header {
-        border-radius: 10px 10px 0 0;
+        border-radius: 10px 10px 0 0 !important;
     }
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+    .btn-dark {
+        background-color: #000;
+        border-color: #000;
+        transition: all 0.3s ease;
     }
-    .btn-danger:hover {
-        background-color: #c82333;
-        border-color: #bd2130;
+    .btn-dark:hover {
+        background-color: #d00; /* Red appears on hover for danger action */
+        border-color: #d00;
     }
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+    .btn-outline-dark {
+        border-color: #000;
+        color: #000;
+        transition: all 0.3s ease;
     }
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #545b62;
+    .btn-outline-dark:hover {
+        background-color: #000;
+        color: #fff;
     }
 </style>
 {% endblock %}
